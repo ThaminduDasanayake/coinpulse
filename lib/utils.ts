@@ -1,5 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
-// import {Time} from 'lightweight-charts';
+import { Time } from 'lightweight-charts';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -16,7 +16,7 @@ export function formatCurrency(
     return showSymbol !== false ? '$0.00' : '0.00';
   }
 
-  if (showSymbol === undefined || showSymbol === true) {
+  if (showSymbol === undefined || showSymbol) {
     return value.toLocaleString(undefined, {
       style: 'currency',
       currency: currency?.toUpperCase() || 'USD',
@@ -69,17 +69,17 @@ export function timeAgo(date: string | number | Date): string {
   return past.toISOString().split('T')[0];
 }
 
-// export function convertOHLCData(data: OHLCData[]) {
-//     return data
-//         .map((d) => ({
-//             time: d[0] as Time, // ensure seconds, not ms
-//             open: d[1],
-//             high: d[2],
-//             low: d[3],
-//             close: d[4],
-//         }))
-//         .filter((item, index, arr) => index === 0 || item.time !== arr[index - 1].time);
-// }
+export function convertOHLCData(data: OHLCData[]) {
+  return data
+    .map((d) => ({
+      time: d[0] as Time, // ensure seconds, not ms
+      open: d[1],
+      high: d[2],
+      low: d[3],
+      close: d[4],
+    }))
+    .filter((item, index, arr) => index === 0 || item.time !== arr[index - 1].time);
+}
 
 export const ELLIPSIS = 'ellipsis' as const;
 export const buildPageNumbers = (
